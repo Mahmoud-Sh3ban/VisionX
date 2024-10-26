@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visionx
+  namespace: default  # Replace with your namespace if different
+spec:
+  replicas: 1  # Adjust as needed
+  selector:
+    matchLabels:
+      app: visionx
+  template:
+    metadata:
+      labels:
+        app: visionx
+    spec:
+      containers:
+      - name: visionx
+        # Replace <your-docker-image> with your actual Docker image URL
+        image: <your-docker-image>:<version-tag>
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+      # Replace <your-image-pull-secret> if you have a secret for pulling images from a private registry
+      imagePullSecrets:
+      - name: <your-image-pull-secret>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visionx
+  namespace: default
+spec:
+  selector:
+    app: visionx
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: visionx-ingress
+  namespace: default
+  annotations:
+    # Configure SSL certificate issuer if needed, replace <your-issuer>
+    cert-manager.io/cluster-issuer: "<your-issuer>"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1000M"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - <your-domain>
+    secretName: <your-tls-secret>  # Replace with your actual TLS secret name
+  rules:
+  - host: <your-domain>
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: visionx
+            port:
+              number: 80
