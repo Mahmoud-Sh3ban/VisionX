@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Webcam Classification</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Live Webcam Feed</h2>
+        <video id="video" autoplay></video>
+        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+
+        <div id="classification-result" class="section">
+            <h3>Classification Result</h3>
+            <p id="prediction">Prediction: -</p>
+            <p id="confidence">Confidence: -</p>
+        </div>
+
+        <button onclick="stopWebcam()">Stop Webcam</button>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const predictionText = document.getElementById('prediction');
+        const confidenceText = document.getElementById('confidence');
+
+        let intervalId;
+
+        // Start webcam and process frames periodically
+        async function startWebcam() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+
+                // Process frames every 2 seconds
+                intervalId = setInterval(captureFrame, 2000);
+            } catch (err) {
+                console.error("Error accessing webcam:", err);
+                alert("Could not access the webcam. Please enable camera access.");
+            }
+        }
+
+        // Capture a frame and classify it
+        async function captureFrame() {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append("file", blob, "snapshot.jpg");
+
+                try {
+                    const response = await fetch('/camera', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    predictionText.innerText = `Prediction: ${result.prediction}`;
+                    confidenceText.innerText = `Confidence: ${result.confidence.toFixed(4)}`;
+                } catch (err) {
+                    console.error("Error during classification:", err);
+                }
+            }, 'image/jpeg');
+        }
+
+        // Stop the webcam and interval
+        function stopWebcam() {
+            clearInterval(intervalId);
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+        }
+
+        // Start the webcam on page load
+        window.onload = startWebcam;
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+video {
+    width: 100%;
+    height: auto;
+    border: 2px solid #f0a500;
+    background-color: black;
+    display: block;
+    margin: 0 auto;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.main-title {
+    font-size: 2em;
+    color: #000000;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.main-title .highlight {
+    color: #F0A500;
+}
+
+.subtitle {
+    font-size: 0.8em;
+    color: #000000;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+}
+
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #F0A500;
+}
+
+h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="file"] {
+    margin-bottom: 12px;
+    padding: 6px;
+    border: 1px solid #F0A500;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    color: #333;
+    width: 100%;
+    max-width: 260px;
+    font-family: 'Poppins', sans-serif;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    background-color: #F0A500;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e0a000;
+    transform: scale(1.05);
+}
+
+#result {
+    margin-top: 20px;
+    background-color: #F9F9F9;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid #F0A500
+}
+
+.error {
+    color: red;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin: 20px;
+        max-width: 100%;
+    }
+
+    .main-title {
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        font-size: 0.8em;
+    }
+
+    h2 {
+        font-size: 1em;
+    }
+
+    input[type="file"] {
+        width: 90%;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    .section {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    #result {
+        font-size: 0.9em;
+    }
+
+    .error {
+        font-size: 0.85em;
+    }
+
+    p, label {
+        font-size: 0.9em;
+    }
+}
