@@ -29,14 +29,20 @@ VisionX aims to simplify the computer vision pipeline by providing a user-friend
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Mahmoud-Sh3ban/VisionX.git
+   git clone https://github.com/<your-username>/VisionX
    cd VisionX
    ```
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the app:
+3. Run the model conversion script:
+   ```bash
+   python convert.py
+   ```
+   This script converts the pre-trained EfficientNetB0 model to TensorFlow Lite format.
+
+4. Start the application:
    ```bash
    python app.py
    ```
@@ -83,10 +89,8 @@ Before deploying, update `deployment.yml` with the appropriate values:
    - Replace `<your-docker-image>` and `<version-tag>` with your Docker image URL and tag.
    - Specify `<your-domain>` and `TLS secret` in the Ingress section if you are using HTTPS.
 
-
 ---
 
 ## License
 
 This project is licensed under the MIT License.
-
