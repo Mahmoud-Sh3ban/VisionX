@@ -29,7 +29,7 @@ VisionX aims to simplify the computer vision pipeline by providing a user-friend
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/VisionX
+   git clone https://github.com/Mahmoud-Sh3ban/VisionX.git
    cd VisionX
    ```
 2. Install dependencies:
